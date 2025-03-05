@@ -1,5 +1,4 @@
-FROM ubuntu:16.04
-MAINTAINER Micheal Waltz <ecliptik@gmail.com>
+FROM ubuntu:20.04
 
 # Set environment vars
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -7,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LC_ALL=C.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
     APP_DIR=/app \
-    SIEGE_VERSION=4.0.2
+    SIEGE_VERSION=4.1.7
 
 # Create app dir
 RUN mkdir -p ${APP_DIR}
@@ -22,11 +21,11 @@ RUN set -ex && \
         ' && \
         runDeps=' \
                 ca-certificates \
-                libssl1.0.0 \
+                openssl \
         ' && \
         apt-get update && \
         apt-get install -y --no-install-recommends $buildDeps $runDeps && \
-        curl -O http://download.joedog.org/siege/siege-${SIEGE_VERSION}.tar.gz && \
+        curl -O https://download.joedog.org/siege/siege-${SIEGE_VERSION}.tar.gz && \
         tar -xvzf siege-${SIEGE_VERSION}.tar.gz && \
         cd siege-${SIEGE_VERSION} && \
         ./configure && \
